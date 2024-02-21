@@ -32,23 +32,38 @@ The contract consists of the following key components:
 - `hasnotrepayed(uint _lnid)`: Checks if the borrower has not repaid the loan yet.
 - `amtrequire(uint _lnid)`: Requires the sent amount to match the loan amount plus interest.
 
-## Callable Functions
+## Functions
+
+### Callable Functions
 
 - `addsigner(address _signer)`: Adds a new signer to the list of authorized signers.
 - `revokesigner(address _signer)`: Revokes signer privileges from a specified address.
 - `raiseatxnrequest(address _to, uint _amount, bytes calldata _data)`: Initiates a transaction request to transfer funds.
+- `txnapproval(uint _txid)`: Approves a transaction request.
+- `lnapprovals(uint _lnID)`: Approves a loan request.
+- `executetxn(uint _txid)`: Executes an approved transaction.
 - `raiseloanrequest(uint _amount, bytes calldata _data)`: Initiates a loan request from the shared pool.
 - `approveloan(uint _lnid)`: Approves a loan request.
 - `repayloan(uint _lnid)`: Repays a loan with interest.
 - `deposit()`: Allows signers to deposit funds into the shared pool.
-- `receive()`: Fallback function to receive and record incoming deposits.
 
-## Internal Functions
+### Internal Functions
 
-- `txnapproval(uint _txid)`: Approves a transaction request internally.
-- `executetxn(uint _txid)`: Executes an approved transaction internally.
-- `gettotalamount()`: Calculates the total amount of funds available in the shared pool.
-- `getapproval(uint _txid)`: Retrieves the number of approvals for a transaction.
+- `gettotalamount()`: Calculates the total amount of funds in the shared pool.
+- `getapproval(uint _txid)`: Gets the number of approvals for a transaction.
+- `getlnapprovals(uint _lnID)`: Gets the number of approvals for a loan.
+
+## Events
+
+- `SignerAdded(address indexed signer)`: Triggered when a new signer is added.
+- `SignerRevoked(address indexed signer)`: Triggered when signer privileges are revoked.
+- `TransactionRaised(uint indexed txid, address indexed from, address indexed to, uint amount, bytes data)`: Triggered when a transaction is raised.
+- `TransactionApproved(uint indexed txid, address indexed signer)`: Triggered when a transaction is approved.
+- `TransactionExecuted(uint indexed txid, address indexed from, address indexed to, uint amount, bytes data)`: Triggered when a transaction is executed.
+- `LoanRequested(uint indexed lnid, address indexed borrower, uint amount, bytes data)`: Triggered when a loan is requested.
+- `LoanApproved(uint indexed lnid, address indexed borrower, uint amount, bytes data)`: Triggered when a loan is approved.
+- `LoanRepaid(uint indexed lnid, address indexed borrower, uint amount)`: Triggered when a loan is repaid.
+- `DepositReceived(address indexed sender, uint amount)`: Triggered when funds are deposited into the shared pool.
 
 ## Getting Started
 
@@ -69,3 +84,8 @@ Here are some example interactions with the contract:
 4. **Approving a Loan**: Signers can approve loan requests initiated by borrowers.
 5. **Repaying a Loan**: Borrowers can repay loans with interest, ensuring timely repayment and maintaining the integrity of the lending system.
 
+## NOTICE
+
+1. PLEASE NOTE THAT THIS SMART CONTRACT WAS WRITTEN TO SHOW MY DEVELOPMENT SKILLS. IF DEPLOYED ON THE MAINNET AND LOSSES ARE INCURRED I AM NOT RESPONSIBLE.
+2. ALSO IF YOU ARE NOT SURE HOW TO DEPLOY A SMART CONTRACT OR SET UP A WALLET PLEASE REFER TO MY MULTISIG WALLET SMART CONTRACT CODE [https://github.com/albertisaac12/MultiSigWallet]
+3. FOR ANY QUERIES PLEASE FEEL FREE PING ME ON LINKEDIN [https://www.linkedin.com/in/abhigadipalli/]
